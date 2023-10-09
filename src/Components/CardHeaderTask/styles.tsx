@@ -1,0 +1,52 @@
+import styled from "styled-components/native";
+
+
+export const Container = styled.View`
+    margin-top: 15px;
+    width: 100%;
+    height: 110px;
+    flex-direction: row;
+`
+export const LeftCard = styled.View`
+    width: 80%;
+    background-color: #40BF62;
+    height: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 20px;
+`
+export const RigthCard = styled.View`
+    width: 20%;
+    background-color:#4ED973;
+    height: 100%;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+`
+export const TextLeftCard = styled.Text`
+    font-size: 18px;
+    color:#FFF;
+    font-weight: 600;
+    text-align: justify;
+    
+`
+export const TextRigthCard = styled.Text`
+    font-size: 12px;
+    color:#FFF;
+    font-weight: 400;
+    text-align: justify;
+    margin-top: 5px;
+    
+`
+export const CheckPoint = styled.View`
+    background-color: #4ED973 ;
+    padding: 5px;
+    border-radius: 20px;
+    margin-right: 10px;
+`
