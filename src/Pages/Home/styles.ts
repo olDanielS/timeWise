@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 export const Container = styled.View `
     flex: 1;
     background-color: #FCFEFF;
-    padding: 10px;
+    padding: 20px;
 `
 export const Content = styled.View`
     flex: 1;
@@ -28,4 +28,20 @@ export const LineTitle = styled.Text`
     margin-bottom: 20px;
     border-color: #000;
     background-color: #000;
+`
+
+export const Footer = styled.View`
+align-items: flex-end;
+height: 15%;
+`
+
+export const BtnNewTask = styled.TouchableOpacity`
+    background-color: #40BF62;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+
+
 `

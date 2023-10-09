@@ -1,4 +1,4 @@
-import { Container,Title,BoxPoint,Point} from './styles';
+import { Container, Title, BoxPoint, Point } from './styles';
 import { StyleSheet } from 'react-native'
 
 export default function TaskItem({ data }) {
@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 4,
+            height: 3,
         },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-
-        elevation: 4,
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        
+        elevation: 6,
     }
 });

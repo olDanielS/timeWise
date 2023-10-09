@@ -1,11 +1,13 @@
-import { Container, Content, TitleContent, LineTitle, TitleBox } from "./styles";
+import { Container, Content, TitleContent, LineTitle, TitleBox,Footer, BtnNewTask } from "./styles";
 import Header from "../../Components/Header";
 import CardHeaderTask from "../../Components/CardHeaderTask";
 import { useState } from "react";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { FlatList } from 'react-native';
 
 import TaskItem from "../../Components/TaskItem";
+import ModalNewTask from "../../Components/ModalNewTask";
 
 export default function Home() {
     const [remainingTasks, setRemainingTasks] = useState([
@@ -17,6 +19,9 @@ export default function Home() {
         { id: 7, task: "Completar todas atividades escolares e envia-las dentro do prazo devido" },
 
     ])
+
+    const [modalShown, setModalShown] = useState(true)
+
 
     return (
         <Container>
@@ -34,7 +39,15 @@ export default function Home() {
                     renderItem={({ item }) => <TaskItem data={item} />}
                     showsVerticalScrollIndicator={false}
                 />
+                <Footer>
+                    <BtnNewTask>
+                        <FontAwesome name="plus" size={32} color={'#FFF'}/>
+                    </BtnNewTask>
+                </Footer>
             </Content>
+            <ModalNewTask shown={modalShown}>
+                
+            </ModalNewTask>
 
         </Container>
     )
