@@ -20,9 +20,11 @@ export default function Home() {
 
     ])
 
-    const [modalShown, setModalShown] = useState(true)
+    const [modalShown, setModalShown] = useState(false)
 
-
+    function actionModal(){
+        setModalShown(!modalShown)
+    }
     return (
         <Container>
             <Header />
@@ -40,12 +42,12 @@ export default function Home() {
                     showsVerticalScrollIndicator={false}
                 />
                 <Footer>
-                    <BtnNewTask>
+                    <BtnNewTask onPress={() =>actionModal() }>
                         <FontAwesome name="plus" size={32} color={'#FFF'}/>
                     </BtnNewTask>
                 </Footer>
             </Content>
-            <ModalNewTask shown={modalShown}>
+            <ModalNewTask shown={modalShown} close={actionModal}>
                 
             </ModalNewTask>
 
