@@ -4,7 +4,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function CardHeaderTask() {
     return (
-        <Container>
+        <Container style={styles.shadow}>
             <LeftCard>
                 <CheckPoint style={styles.shadow}>
                     <FontAwesome name='check' size={20} color='#FFF'/>
