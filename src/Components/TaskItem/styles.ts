@@ -11,6 +11,7 @@ export const Container = styled.View`
     padding: 10px;
     justify-content: space-evenly;
     flex-direction: row;
+    margin: 5px;
 ` 
 
 export const Title = styled.Text`

@@ -1,9 +1,14 @@
-import { Modal, StyleSheet, TouchableWithoutFeedback} from "react-native";
-import { ModalBody, CloseButton, ModalHeader, ModalTitle} from './styles'
+import { Modal, StyleSheet, TouchableWithoutFeedback, Keyboard} from "react-native";
+import { ModalBody, CloseButton, ModalHeader, ModalTitle, ModalContent, TitleContent,
+     InputTask, LabelScore,BoxPrority,BoxTitle, BtnArea, Btn, BtnText, Submit, SubmitText} from './styles'
 import { BlurView } from "expo-blur";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import {useState } from "react";
 
 export default function ModalNewTask(props) {
+
+    const [priorityLevel, setPriorityLevel] = useState('');
+
     return (
         <Modal
             visible={props.shown}
@@ -12,7 +17,7 @@ export default function ModalNewTask(props) {
             animationType="fade"
 
         >
-            <TouchableWithoutFeedback onPress={() => props.close()}>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <BlurView intensity={10} style={styleModal.ModalArea}>
                     <ModalBody style={styleModal.shadow}>
                         <ModalHeader>
@@ -21,6 +26,29 @@ export default function ModalNewTask(props) {
                                 <FontAwesome name="close" size={17} color='#7B7B7B' />
                             </CloseButton>
                         </ModalHeader>
+                        <ModalContent>
+                            <TitleContent>Descrição da tarefa</TitleContent>
+                            <InputTask placeholder='Nova tarefa'/>
+                            <LabelScore>Pontuação: <LabelScore type='point'> 00 pts</LabelScore></LabelScore>
+                        </ModalContent>
+
+                        <BoxPrority style={styleModal.shadow}>
+                            <BoxTitle>Nivél de Prioridade</BoxTitle>
+                            <BtnArea>
+                                <Btn onPress={() => setPriorityLevel('low')} style={{backgroundColor: priorityLevel === 'low' ? '#00B94A' : '#C2C2C2'}}>
+                                    <BtnText>Baixa</BtnText>
+                                </Btn>
+                                <Btn onPress={() => setPriorityLevel('medium')} style={{backgroundColor: priorityLevel === 'medium' ? '#694993' : '#C2C2C2'}}>
+                                    <BtnText>Média</BtnText>
+                                </Btn>
+                                <Btn onPress={() => setPriorityLevel('high')} style={{backgroundColor: priorityLevel === 'high' ? '#EF463A' : '#C2C2C2'}}>
+                                    <BtnText>Alta</BtnText>
+                                </Btn>
+                            </BtnArea>
+                        </BoxPrority>
+                            <Submit>
+                                <SubmitText>Criar Tarefa</SubmitText>
+                            </Submit>
                     </ModalBody>
                 </BlurView>
             </TouchableWithoutFeedback>
