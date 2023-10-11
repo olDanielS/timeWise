@@ -3,15 +3,19 @@ import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerRoute from './src/Routes/DrawerRoute';
 
+import TasKProvider from './src/Context/task';
 
 export default function App() {
+
   return (
     <>
-      <StatusBar backgroundColor='#DCDCDC' barStyle='dark-content'/>
+      <StatusBar backgroundColor='#DCDCDC' barStyle='dark-content' />
+      <TasKProvider>
         <NavigationContainer>
-          <DrawerRoute/>
+          <DrawerRoute />
         </NavigationContainer>
-      
+      </TasKProvider>
+
     </>
   );
 }

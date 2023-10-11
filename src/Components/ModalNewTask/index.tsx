@@ -3,11 +3,25 @@ import { ModalBody, CloseButton, ModalHeader, ModalTitle, ModalContent, TitleCon
      InputTask, LabelScore,BoxPrority,BoxTitle, BtnArea, Btn, BtnText, Submit, SubmitText} from './styles'
 import { BlurView } from "expo-blur";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import {useState } from "react";
+import {useState, useContext } from "react";
+import { TaskContext } from "../../Context/task";
+import { Alert } from "react-native";
+
 
 export default function ModalNewTask(props) {
 
+    const {name, setDescriptionTask, descriptionTask} = useContext(TaskContext)
+
     const [priorityLevel, setPriorityLevel] = useState('');
+
+    function handleNewTask(){
+        if(!descriptionTask){
+            Alert.alert('Ops', 'Os campos não podem ficar vazios')
+            return
+            
+        }
+        Alert.alert(descriptionTask)
+    }
 
     return (
         <Modal
@@ -28,7 +42,11 @@ export default function ModalNewTask(props) {
                         </ModalHeader>
                         <ModalContent>
                             <TitleContent>Descrição da tarefa</TitleContent>
-                            <InputTask placeholder='Nova tarefa'/>
+                            <InputTask 
+                            placeholder='Nova tarefa'
+                            value={descriptionTask}
+                            onChangeText={setDescriptionTask}
+                            />
                             <LabelScore>Pontuação: <LabelScore type='point'> 00 pts</LabelScore></LabelScore>
                         </ModalContent>
 
@@ -46,7 +64,7 @@ export default function ModalNewTask(props) {
                                 </Btn>
                             </BtnArea>
                         </BoxPrority>
-                            <Submit>
+                            <Submit onPress={() => handleNewTask()}>
                                 <SubmitText>Criar Tarefa</SubmitText>
                             </Submit>
                     </ModalBody>

@@ -48,6 +48,7 @@ export const InputTask = styled.TextInput`
   border-radius: 10px;
   border-color: #DCDCDC;
   padding: 5px;
+  padding-left: 15px;
   font-size: 16px;
   margin-top: 5px;
 
