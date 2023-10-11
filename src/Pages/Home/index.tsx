@@ -8,6 +8,7 @@ import { FlatList } from 'react-native';
 
 import TaskItem from "../../Components/TaskItem";
 import ModalNewTask from "../../Components/ModalNewTask";
+import ModalFeedback from "../../Components/ModalFeedBack";
 
 export default function Home() {
     const [remainingTasks, setRemainingTasks] = useState([
@@ -50,7 +51,9 @@ export default function Home() {
             <ModalNewTask shown={modalShown} close={actionModal}>
                 
             </ModalNewTask>
+            <ModalFeedback shown={modalShown} close={actionModal}>
 
+            </ModalFeedback>
         </Container>
     )
 }
