@@ -1,4 +1,4 @@
-import { Container, Content, TitleContent, LineTitle, TitleBox,Footer, BtnNewTask } from "./styles";
+import { Container, Content, TitleContent, LineTitle, TitleBox, Footer, BtnNewTask,BtnActionsArea, BtnActionsText } from "./styles";
 import Header from "../../Components/Header";
 import CardHeaderTask from "../../Components/CardHeaderTask";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import { FlatList } from 'react-native';
 import TaskItem from "../../Components/TaskItem";
 import ModalNewTask from "../../Components/ModalNewTask";
 import ModalFeedback from "../../Components/ModalFeedBack";
+import ModalActions from "../../Components/ModalActions";
 
 export default function Home() {
     const [remainingTasks, setRemainingTasks] = useState([
@@ -23,7 +24,7 @@ export default function Home() {
 
     const [modalShown, setModalShown] = useState(false)
 
-    function actionModal(){
+    function actionModal() {
         setModalShown(!modalShown)
     }
     return (
@@ -43,17 +44,28 @@ export default function Home() {
                     showsVerticalScrollIndicator={false}
                 />
                 <Footer>
-                    <BtnNewTask onPress={() =>actionModal() }>
-                        <FontAwesome name="plus" size={32} color={'#FFF'}/>
+                    <BtnNewTask onPress={() => actionModal()}>
+                        <FontAwesome name="plus" size={32} color={'#FFF'} />
                     </BtnNewTask>
                 </Footer>
             </Content>
             <ModalNewTask shown={modalShown} close={actionModal}>
-                
+
             </ModalNewTask>
             <ModalFeedback shown={modalShown} close={actionModal}>
 
             </ModalFeedback>
+            <ModalActions shown={modalShown} close={actionModal} title={'Ações'}>
+                <BtnActionsArea >
+                    <BtnActionsText>Editar</BtnActionsText>
+                </BtnActionsArea>
+
+
+                <BtnActionsArea>
+                    <BtnActionsText>Excluir</BtnActionsText>
+                </BtnActionsArea>
+
+            </ModalActions>
         </Container>
     )
 }
