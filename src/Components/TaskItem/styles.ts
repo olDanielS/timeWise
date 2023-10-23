@@ -24,8 +24,13 @@ export const BoxPoint = styled.View`
     justify-content: center;
     padding: 0px;
 ` 
-export const Point = styled.Text`
-    color: ${props => props.side == 'Up' ? '#4285F4' : '#000000'};
+
+interface PointProps{
+    side: string;
+}
+
+export const Point = styled.Text<PointProps>`
+    color: ${(props) => props.side == 'Up' ? '#4285F4' : '#000000'};
     font-size: ${props => props.side == 'Up' ? '24px'  : '16px'};
     font-weight: bold;
 

@@ -37,8 +37,8 @@ export default function Home() {
         }
     }
 
-    function removeTask(task:object){
-        console.log('Removendoo', task.task)
+    function removeTask(id: string){
+        console.log('Removendoo')
     }
 
     return (
@@ -54,7 +54,7 @@ export default function Home() {
                 <FlatList
                     data={remainingTasks}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <TaskItem data={item} remove={removeTask} />}
+                    renderItem={({ item }) => <TaskItem {...item}/>}
                     showsVerticalScrollIndicator={false}
                 />
                 <Footer>

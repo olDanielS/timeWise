@@ -6,11 +6,12 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {useState, useContext } from "react";
 import { TaskContext } from "../../Context/task";
 import { Alert } from "react-native";
+import { ModelTypeProps } from "../../Interfaces/ModelTypePros/ModalInterfaces";
 
 
-export default function ModalNewTask(props) {
+export default function ModalNewTask({close, show}: ModelTypeProps) {
 
-    const {name,handleSubmitTask} = useContext(TaskContext)
+    const {handleSubmitTask} = useContext(TaskContext)
 
     const [descriptionTask, setDescriptionTask ] = useState('');
     const [priorityLevel, setPriorityLevel] = useState('');
@@ -27,7 +28,7 @@ export default function ModalNewTask(props) {
         setDescriptionTask('')
         setPriorityLevel('')
         setPontuation(0);
-        props.close()
+        close()
     }
     function handlePontuation(task:string){
         if(task == 'low'){
@@ -50,16 +51,16 @@ export default function ModalNewTask(props) {
 
     return (
         <Modal
-            visible={props.show}
+            visible={show}
             transparent={true}
-            onRequestClose={() => props.close()}
+            onRequestClose={() => close()}
             animationType="fade">
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <BlurView intensity={10} style={styleModal.ModalArea}>
                     <ModalBody style={styleModal.shadow}>
                         <ModalHeader>
                             <ModalTitle>Criar uma nova tarefa</ModalTitle>
-                            <CloseButton onPress={() =>props.close()}>
+                            <CloseButton onPress={() => close()}>
                                 <FontAwesome name="close" size={17} color='#7B7B7B' />
                             </CloseButton>
                         </ModalHeader>

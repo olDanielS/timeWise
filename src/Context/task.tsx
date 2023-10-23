@@ -2,23 +2,24 @@ import {useState, createContext } from "react";
 import {ReactNode} from 'react';
 
 import uuid from 'react-native-uuid';
+import { TaskProps } from "../Interfaces/TasksInterface/TaskInterface";
 
 
-export const TaskContext = createContext({});
 
 type TaskProviderProps = {
     children: ReactNode
 }
-type TaskProps = {
-    descriptionTask: string,
-    priorityLevel: string,
-    pontuation: number;
+
+interface TaskContextType {
+    handleSubmitTask: (props: TaskProps) => void;
+    
 }
 
+export const TaskContext = createContext({} as TaskContextType);
 
 export default function TasKProvider({children}:TaskProviderProps){
   
-    function handleSubmitTask(props:TaskProps){
+    function handleSubmitTask(props: TaskProps){
 
         const taskID = uuid.v4();
 
@@ -29,7 +30,7 @@ export default function TasKProvider({children}:TaskProviderProps){
     }
 
     return (
-        <TaskContext.Provider value={{name: 'daniel',handleSubmitTask}}>
+        <TaskContext.Provider value={{handleSubmitTask}}>
             {children}
         </TaskContext.Provider>
     )

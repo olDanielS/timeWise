@@ -2,25 +2,20 @@ import { CloseButton, Modal, ModalArea, ModalBody, ModalHeader, ModalTitle } fro
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { ModelTypeProps } from "../../Interfaces/ModelTypePros/ModalInterfaces";
 
-type TypeProps = {
-    show: () => any,
-    close: () => any,
-    title?: string,
-    children: any
-  }
 
-export default (props:TypeProps) => {
+export default ({close, show, children, title}: ModelTypeProps) => {
   return (
-    <TouchableWithoutFeedback onPress={() => props.close()}>
-      <Modal transparent visible={props.show} animationType="slide" onRequestClose={() => props.close()}>
+    <TouchableWithoutFeedback onPress={() => close()}>
+      <Modal transparent visible={show} animationType="slide" onRequestClose={() => close()}>
         <ModalArea>
           <ModalBody>
             <ModalHeader>
-              <ModalTitle>{props.title}</ModalTitle>
-              <CloseButton><MaterialCommunityIcons name="menu-down" size={40} onPress={() => props.close()} /></CloseButton>
+              <ModalTitle>{title}</ModalTitle>
+              <CloseButton><MaterialCommunityIcons name="menu-down" size={40} onPress={() => close()} /></CloseButton>
             </ModalHeader>
-            {props.children}
+            {children}
           </ModalBody>
         </ModalArea>
       </Modal>
