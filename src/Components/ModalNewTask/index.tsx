@@ -50,7 +50,7 @@ export default function ModalNewTask(props) {
 
     return (
         <Modal
-            visible={props.shown}
+            visible={props.show}
             transparent={true}
             onRequestClose={() => props.close()}
             animationType="fade">

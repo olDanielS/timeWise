@@ -1,6 +1,6 @@
 import styled from "styled-components/native"
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
     background-color: white;
     height: 80px;
     width: 100%;
@@ -30,3 +30,21 @@ export const Point = styled.Text`
     font-weight: bold;
 
 ` 
+
+export const BtnActionsArea = styled.TouchableOpacity`
+    height: 45px;
+    background-color: #DCDCDC;
+    border-width: 1px;
+    border-color: #121214;
+    border-radius: 20px;
+    margin-Top: 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+`
+
+export const BtnActionsText = styled.Text`
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+`

@@ -13,8 +13,7 @@ export default function Header() {
             <Logo source={require('../../assets/TimeWise.png')} />
             <Modes>
                 <BtnMenu>
-                    <Feather name="sun" size={20} color='#FFBA34'/>
-                    <Feather name="moon" size={20} />
+                    
                 </BtnMenu>
             </Modes>
         </Container>

@@ -13,7 +13,7 @@ type TypeProps = {
 export default (props:TypeProps) => {
   return (
     <TouchableWithoutFeedback onPress={() => props.close()}>
-      <Modal transparent visible={true} animationType="slide" onRequestClose={() => props.close()}>
+      <Modal transparent visible={props.show} animationType="slide" onRequestClose={() => props.close()}>
         <ModalArea>
           <ModalBody>
             <ModalHeader>

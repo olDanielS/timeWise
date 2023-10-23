@@ -22,11 +22,25 @@ export default function Home() {
 
     ])
 
-    const [modalShown, setModalShown] = useState(false)
+    const [modalNewTaks, setModalNewTask] = useState(false)
+    const [modalFeedBack, setModalFeedBack] = useState(false)
+    const [modalActions, setModalActions] = useState(false)
 
-    function actionModal() {
-        setModalShown(!modalShown)
+    function actionModal(type:string) {
+        if(type == 'task'){
+            setModalNewTask(!modalNewTaks)
+        }
+        else if(type == 'feedback'){
+            setModalFeedBack(!modalFeedBack)
+        }else{
+            setModalActions(!modalActions)
+        }
     }
+
+    function removeTask(task:object){
+        console.log('Removendoo', task.task)
+    }
+
     return (
         <Container>
             <Header />
@@ -40,29 +54,25 @@ export default function Home() {
                 <FlatList
                     data={remainingTasks}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <TaskItem data={item} />}
+                    renderItem={({ item }) => <TaskItem data={item} remove={removeTask} />}
                     showsVerticalScrollIndicator={false}
                 />
                 <Footer>
-                    <BtnNewTask onPress={() => actionModal()}>
+                    <BtnNewTask onPress={() => actionModal("task")}>
                         <FontAwesome name="plus" size={32} color={'#FFF'} />
                     </BtnNewTask>
                 </Footer>
             </Content>
-            <ModalNewTask shown={modalShown} close={actionModal}>
+            <ModalNewTask show={modalNewTaks} close={() => actionModal('task')}/>
 
-            </ModalNewTask>
-            <ModalFeedback shown={modalShown} close={actionModal}>
+            <ModalFeedback show={modalFeedBack} close={() => actionModal('feedback')}/>
 
-            </ModalFeedback>
-            <ModalActions shown={modalShown} close={actionModal} title={'Ações'}>
+            <ModalActions show={modalActions} close={() => actionModal('actions')}>
                 <BtnActionsArea >
                     <BtnActionsText>Editar</BtnActionsText>
                 </BtnActionsArea>
-
-
                 <BtnActionsArea>
-                    <BtnActionsText>Excluir</BtnActionsText>
+                    <BtnActionsText >Excluir</BtnActionsText>
                 </BtnActionsArea>
 
             </ModalActions>

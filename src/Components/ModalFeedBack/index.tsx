@@ -52,7 +52,7 @@ export default function ModalFeedBack(props) {
 
     return (
         <Modal
-            visible={false}
+            visible={props.show}
             transparent={true}
             onRequestClose={() => props.close()}
             animationType="fade">
