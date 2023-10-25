@@ -7,7 +7,7 @@ import { ModelTypeProps } from "../../Interfaces/ModelTypePros/ModalInterfaces";
 
 export default ({close, show, children, title}: ModelTypeProps) => {
   return (
-    <TouchableWithoutFeedback onPress={() => close()}>
+    <TouchableWithoutFeedback onPress={() => alert('CLICK')}>
       <Modal transparent visible={show} animationType="slide" onRequestClose={() => close()}>
         <ModalArea>
           <ModalBody>

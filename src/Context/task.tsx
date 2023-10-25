@@ -27,6 +27,7 @@ export default function TasKProvider({children}:TaskProviderProps){
         console.log('Priority: ', props.priorityLevel)
         console.log('Pontuation: ', props.pontuation)
         console.log('TASK ID: ',taskID )
+        return taskID
     }
 
     return (

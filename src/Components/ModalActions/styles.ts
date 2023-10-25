@@ -33,5 +33,7 @@ export const ModalTitle = styled.Text`
   flex-grow: 1;
   text-align: center;
   font-size: 16px;
+  width: 10px;
+  color: #3f3f3f
 `
 

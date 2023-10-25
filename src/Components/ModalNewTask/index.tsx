@@ -25,6 +25,7 @@ export default function ModalNewTask({close, show}: ModelTypeProps) {
             
         }
         handleSubmitTask({descriptionTask, priorityLevel, pontuation})
+    
         setDescriptionTask('')
         setPriorityLevel('')
         setPontuation(0);

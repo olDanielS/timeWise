@@ -4,7 +4,7 @@ import CardHeaderTask from "../../Components/CardHeaderTask";
 import { useState } from "react";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import { FlatList } from 'react-native';
+import { Alert, FlatList } from 'react-native';
 
 import TaskItem from "../../Components/TaskItem";
 import ModalNewTask from "../../Components/ModalNewTask";
@@ -22,11 +22,13 @@ export default function Home() {
 
     ])
 
-    const [modalNewTaks, setModalNewTask] = useState(false)
-    const [modalFeedBack, setModalFeedBack] = useState(false)
-    const [modalActions, setModalActions] = useState(false)
+    const [modalNewTaks, setModalNewTask] = useState(false);
+    const [modalFeedBack, setModalFeedBack] = useState(false);
+    const [modalActions, setModalActions] = useState(false);
 
-    function actionModal(type:string) {
+    const [currentTask, setCurrentTask] = useState({});
+
+    function actionModal(type:string, item?:object) {
         if(type == 'task'){
             setModalNewTask(!modalNewTaks)
         }
@@ -34,12 +36,26 @@ export default function Home() {
             setModalFeedBack(!modalFeedBack)
         }else{
             setModalActions(!modalActions)
+            setCurrentTask(item|| {})
+            console.log(item)
         }
     }
 
-    function removeTask(id: string){
-        console.log('Removendoo')
-    }
+    const removeTask = (id?:string) => {
+        Alert.alert('Atenção', 'Deseja remover está tarefa?', [
+          {
+            text: 'Sim',
+            onPress: () => {
+              //API
+                console.log('Removendo tarefa ID: ', id);
+                setModalActions(!modalActions)
+            }
+          },
+          {
+            text: 'Não'
+          }
+        ])
+      }
 
     return (
         <Container>
@@ -54,7 +70,7 @@ export default function Home() {
                 <FlatList
                     data={remainingTasks}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <TaskItem {...item}/>}
+                    renderItem={({ item }) => <TaskItem data={item} openModal={actionModal}/>}
                     showsVerticalScrollIndicator={false}
                 />
                 <Footer>
@@ -67,12 +83,12 @@ export default function Home() {
 
             <ModalFeedback show={modalFeedBack} close={() => actionModal('feedback')}/>
 
-            <ModalActions show={modalActions} close={() => actionModal('actions')}>
+            <ModalActions show={modalActions} close={() => setModalActions(!modalActions)} title={currentTask.task}>
                 <BtnActionsArea >
                     <BtnActionsText>Editar</BtnActionsText>
                 </BtnActionsArea>
-                <BtnActionsArea>
-                    <BtnActionsText >Excluir</BtnActionsText>
+                <BtnActionsArea onPress={() => removeTask(currentTask.id)}>
+                    <BtnActionsText>Excluir</BtnActionsText>
                 </BtnActionsArea>
 
             </ModalActions>

@@ -47,9 +47,8 @@ export const BtnNewTask = styled.TouchableOpacity`
 `
 export const BtnActionsArea = styled.TouchableOpacity`
     height: 45px;
-    background-color: #DCDCDC;
-    border-width: 1px;
-    border-color: #121214;
+    background-color: #40BF62;
+   
     border-radius: 20px;
     margin-Top: 20px;
     align-items: center;
@@ -58,7 +57,7 @@ export const BtnActionsArea = styled.TouchableOpacity`
 `
 
 export const BtnActionsText = styled.Text`
-    font-size: 18px;
-    color: #000;
+    font-size: 20px;
+    color: #FFF;
     font-weight: bold;
 `
