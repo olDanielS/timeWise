@@ -12,7 +12,7 @@ export default ({close, show, children, title}: ModelTypeProps) => {
         <ModalArea>
           <ModalBody>
             <ModalHeader>
-              <ModalTitle>{title}</ModalTitle>
+              <ModalTitle>Descrição: {title}</ModalTitle>
               <CloseButton><MaterialCommunityIcons name="menu-down" size={40} onPress={() => close()} /></CloseButton>
             </ModalHeader>
             {children}

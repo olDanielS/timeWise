@@ -14,7 +14,7 @@ import ModalActions from "../../Components/ModalActions";
 export default function Home() {
     const [remainingTasks, setRemainingTasks] = useState([
         { id: 1, task: "Completar todas atividades escolares e envia-las dentro do prazo devido" },
-        { id: 3, task: "Completar todas atividades escolares e envia-las dentro do prazo devido" },
+        { id: 3, task: "Completar todas atividades escolares e envia-las dentro do prazo devido", status: true },
         { id: 4, task: "Completar todas atividades escolares e envia-las dentro do prazo devido" },
         { id: 5, task: "Completar todas atividades escolares e envia-las dentro do prazo devido" },
         { id: 6, task: "Completar todas atividades escolares e envia-las dentro do prazo devido" },

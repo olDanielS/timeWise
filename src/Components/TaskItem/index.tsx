@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native'
 export default function TaskItem({data, openModal}: any ) {
     return (
         <Container style={styles.shadow} onLongPress={() => openModal('action', data)}>
-            <Title>{data.task}</Title>
+            <Title  status={data.status} >{data.task}</Title>
             <BoxPoint>
                 <Point side='Up'>+5</Point>
                 <Point>pts</Point>

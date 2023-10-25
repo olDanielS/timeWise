@@ -18,6 +18,9 @@ export const Title = styled.Text`
     font-weight: 500;
     font-size: 14px;
     width: 70%;
+    color: ${(props) => props.status == true ? '#dcdcdc': '#000'};
+    text-decoration: ${(props) => props.status == true ? 'line-through': 'none'};
+    
 ` 
 export const BoxPoint = styled.View`
     align-items: center;
@@ -52,4 +55,5 @@ export const BtnActionsText = styled.Text`
     font-size: 18px;
     color: #000;
     font-weight: bold;
+
 `
