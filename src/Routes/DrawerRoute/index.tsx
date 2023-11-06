@@ -14,7 +14,7 @@ export default function DrawerRoute(){
             screenOptions={{
                 drawerActiveBackgroundColor: '#40BF62',
                 drawerActiveTintColor: '#FFF',
-                drawerLabelStyle:{fontSize:18}
+                drawerLabelStyle:{fontSize:16}
             }}
         >
             <Drawer.Screen name="Home" component={Home}

@@ -4,7 +4,7 @@ import CardHeaderTask from "../../Components/CardHeaderTask";
 import { useState } from "react";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-import { Alert, FlatList } from 'react-native';
+import { Alert, FlatList, Text } from 'react-native';
 
 import TaskItem from "../../Components/TaskItem";
 import ModalNewTask from "../../Components/ModalNewTask";
@@ -72,6 +72,7 @@ export default function Home() {
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <TaskItem data={item} openModal={actionModal}/>}
                     showsVerticalScrollIndicator={false}
+                    ListEmptyComponent={() => <Text>humm, ainda não à tarefas para carregar</Text>}
                 />
                 <Footer>
                     <BtnNewTask onPress={() => actionModal("task")}>

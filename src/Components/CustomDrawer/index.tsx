@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import {Container,Header, Logo} from './styles';
-import {styles} from '../CardHeaderTask/index';
+
 
 import {DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
 
