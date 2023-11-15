@@ -18,14 +18,15 @@ export default function ModalNewTask({close, show}: ModelTypeProps) {
     const [pontuation, setPontuation] = useState(0);
     
     
-     function handleNewTask(){
+     async function handleNewTask(){
         if(!descriptionTask || !priorityLevel){
             Alert.alert('Ops', 'Os campos não podem ficar vazios')
             return
             
         }
-        handleSubmitTask({descriptionTask, priorityLevel, pontuation})
-    
+     handleSubmitTask({descriptionTask, priorityLevel, pontuation})
+     
+
         setDescriptionTask('')
         setPriorityLevel('')
         setPontuation(0);
