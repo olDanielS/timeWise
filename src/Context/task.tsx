@@ -11,6 +11,7 @@ type TaskProviderProps = {
 
 interface TaskContextType {
     handleSubmitTask: (props: TaskProps) => void;
+    newTask: boolean
     
 }
 
@@ -20,26 +21,27 @@ export default function TasKProvider({children}:TaskProviderProps){
 
     const [newTask, setNewTask] = useState<boolean>(false);
   
-    async function handleSubmitTask(props: TaskProps){
-
-        const raw = {
+    const handleSubmitTask = async (props) => {
+        try {
+          const raw = {
             'description': props.descriptionTask,
             'priorityLevel': props.priorityLevel,
             'pontuation': props.pontuation
-
-        }    
-        await api.post('task/create-task',raw, {
+          };
+    
+          const response = await api.post('task/create-task', raw, {
             headers: {
-                "Content-Type": "application/json"        
+              "Content-Type": "application/json"        
             },
-        }).then((res)=> {
-            setNewTask(!newTask)
-            return res
-        }).catch((err) =>{
-            
-            return err
-        })
-    }
+          });
+    
+          setNewTask(!newTask);
+          return response.data;
+
+        } catch(err){
+            return err.response.data
+        }
+      };
 
     return (
         <TaskContext.Provider value={{handleSubmitTask, newTask}}>

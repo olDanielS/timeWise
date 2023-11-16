@@ -1,22 +1,24 @@
+import {useState, useContext } from "react";
 import { Modal, StyleSheet, TouchableWithoutFeedback, Keyboard} from "react-native";
 import { ModalBody, CloseButton, ModalHeader, ModalTitle, ModalContent, TitleContent,
      InputTask, LabelScore,BoxPrority,BoxTitle, BtnArea, Btn, BtnText, Submit, SubmitText} from './styles'
 import { BlurView } from "expo-blur";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import {useState, useContext } from "react";
 import { TaskContext } from "../../Context/task";
 import { Alert } from "react-native";
 import { ModelTypeProps } from "../../Interfaces/ModelTypePros/ModalInterfaces";
 
+import Toast from 'react-native-toast-message';
 
-export default function ModalNewTask({close, show}: ModelTypeProps) {
+
+export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
 
     const {handleSubmitTask} = useContext(TaskContext)
 
     const [descriptionTask, setDescriptionTask ] = useState('');
     const [priorityLevel, setPriorityLevel] = useState('');
     const [pontuation, setPontuation] = useState(0);
-    
+
     
      async function handleNewTask(){
         if(!descriptionTask || !priorityLevel){
@@ -24,9 +26,13 @@ export default function ModalNewTask({close, show}: ModelTypeProps) {
             return
             
         }
-     handleSubmitTask({descriptionTask, priorityLevel, pontuation})
-     
+    const response = await handleSubmitTask({descriptionTask, priorityLevel, pontuation})
+    if(response.error){
+        Alert.alert('Oops', 'Parece que algo deu errado :(\nVerifique se a tarefa já existe')
+    }else{
+        feedback('feedback', response)
 
+    }
         setDescriptionTask('')
         setPriorityLevel('')
         setPontuation(0);
@@ -56,7 +62,7 @@ export default function ModalNewTask({close, show}: ModelTypeProps) {
             visible={show}
             transparent={true}
             onRequestClose={() => close()}
-            animationType="fade">
+            animationType="slide">
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <BlurView intensity={10} style={styleModal.ModalArea}>
                     <ModalBody style={styleModal.shadow}>

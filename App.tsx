@@ -5,6 +5,8 @@ import DrawerRoute from './src/Routes/DrawerRoute';
 
 import TasKProvider from './src/Context/task';
 
+import Toast from 'react-native-toast-message';
+
 export default function App() {
 
   return (
@@ -15,7 +17,6 @@ export default function App() {
           <DrawerRoute />
         </NavigationContainer>
       </TasKProvider>
-
     </>
   );
 }
