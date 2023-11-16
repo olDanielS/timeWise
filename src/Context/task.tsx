@@ -11,6 +11,7 @@ type TaskProviderProps = {
 
 interface TaskContextType {
     handleSubmitTask: (props: TaskProps) => void;
+    handleUpdateTask: (props: TaskProps) => void;
     newTask: boolean
     
 }
@@ -43,8 +44,30 @@ export default function TasKProvider({children}:TaskProviderProps){
         }
       };
 
+    const handleUpdateTask = async (props) => {
+        try {
+          const raw = {
+            'status': !props.status
+            
+          };
+    
+          const response = await api.put(`task/${props._id}`, raw, {
+            headers: {
+              "Content-Type": "application/json"        
+            },
+          });
+          console.log(response)
+    
+          setNewTask(!newTask);
+          return response.data;
+
+        } catch(err){
+            return err.response.data
+        }
+      };
+
     return (
-        <TaskContext.Provider value={{handleSubmitTask, newTask}}>
+        <TaskContext.Provider value={{handleSubmitTask, newTask,handleUpdateTask}}>
             {children}
         </TaskContext.Provider>
     )

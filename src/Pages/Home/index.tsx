@@ -10,16 +10,15 @@ import TaskItem from "../../Components/TaskItem";
 import ModalNewTask from "../../Components/ModalNewTask";
 import ModalFeedback from "../../Components/ModalFeedBack";
 import ModalActions from "../../Components/ModalActions";
+
 import { TaskContext } from "../../Context/task";
 
 import api from "../../Services/api";
 
-import Toast from 'react-native-toast-message';
-
 
 export default function Home() {
-    const [remainingTasks, setRemainingTasks] = useState([])
-    const { newTask } = useContext(TaskContext);
+    const [remainingTasks, setRemainingTasks] = useState<any>([])
+    const { newTask,handleUpdateTask} = useContext(TaskContext);
 
     useEffect(() => {
         async function handleGetAllTasks() {
@@ -38,6 +37,13 @@ export default function Home() {
     const [modalActions, setModalActions] = useState(false);
 
     const [currentTask, setCurrentTask] = useState({});
+
+    const totalTask = remainingTasks.filter((item) => item.status !== true);
+
+    let SumTotalPoints = 0;
+    const totalPoints = remainingTasks.filter((item:any) => item.status == true);
+    const pontuation = totalPoints.map((point:any) => SumTotalPoints+=point.pontuation) 
+
 
     function actionModal(type: string, item?: object) {
         if (type == 'task') {
@@ -75,21 +81,39 @@ export default function Home() {
         ])
     }
 
+    function handleCompleteTask(data:any){
+        Alert.alert('Atenção', 'Deseja marcar a tarefa como concluida?', [
+            {
+                text: 'Sim',
+                onPress: async () => {
+                    handleUpdateTask(data)
+                    /*if(data.status == false){
+                        return
+                    }
+                Alert.alert('TimeWise', 'Oops... Parece que essa tarefa já foi marcada como concluida')*/
+                }
+            },
+            {
+                text: 'Não'
+            }
+        ])
+    }
+
     return (
         <Container>
 
-            <Header />
+            <Header pontuation={SumTotalPoints}/>
             <CardHeaderTask />
 
             <Content>
                 <TitleBox>
-                    <TitleContent>Tarefas restantes ({remainingTasks.length})</TitleContent>
+                    <TitleContent>Tarefas restantes ({totalTask.length})</TitleContent>
                     <LineTitle />
                 </TitleBox>
                 <FlatList
                     data={remainingTasks}
                     keyExtractor={(item) => item._id.toString()}
-                    renderItem={({ item }) => <TaskItem data={item} openModal={actionModal} />}
+                    renderItem={({ item }) => <TaskItem data={item} openModal={actionModal} checkTask={handleCompleteTask} />}
                     showsVerticalScrollIndicator={false}
                     ListEmptyComponent={() => <Text>humm, ainda não à tarefas para carregar</Text>}
                 />

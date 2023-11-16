@@ -1,8 +1,9 @@
-import { Container, Logo, BtnMenu, Modes } from "./styles";
+import { Container, Logo, BtnMenu, Modes,Point } from "./styles";
 import Feather from '@expo/vector-icons/Feather';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Header() {
+export default function Header(props) {
     const navigation = useNavigation();
 
     return (
@@ -13,7 +14,8 @@ export default function Header() {
             <Logo source={require('../../assets/TimeWise.png')} />
             <Modes>
                 <BtnMenu>
-                    
+                    <FontAwesome name="trophy" size={20} color={"#FFBF00"} />
+                    <Point>{props.pontuation} pts</Point>
                 </BtnMenu>
             </Modes>
         </Container>

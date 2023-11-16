@@ -2,9 +2,9 @@ import { TaskProps } from '../../Interfaces/TasksInterface/TaskInterface';
 import { Container, Title, BoxPoint, Point } from './styles';
 import { StyleSheet } from 'react-native'
 
-export default function TaskItem({data, openModal}: any ) {
+export default function TaskItem({data, openModal,checkTask}: any ) {
     return (
-        <Container style={styles.shadow} onLongPress={() => openModal('action', data)}>
+        <Container style={styles.shadow} onLongPress={() => openModal('action', data)} onPress={() => checkTask(data)}>
             <Title  status={data.status} >{data.description}</Title>
             <BoxPoint>
                 <Point side='Up'>+{data.pontuation}</Point>

@@ -17,14 +17,21 @@ export const BtnMenu = styled.TouchableOpacity`
     gap: 10px;
 `
 export const Modes = styled.View`
-    height: 21px;
-    width: 55px;
-    background-color: #8A8A8A;
+    height: 50px;
+    min-width: 100px;
+    background-color: #cccccc;
     flex-direction: row;
     border-radius: 20px;
     justify-content: center;
     padding: 1px;
     align-items: center;
+    gap: 10px;
+
+`
+export const Point = styled.Text`
+  font-size: 16px;
+  text-align: center;
+  font-weight: bold;
 
 `
 
