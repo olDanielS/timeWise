@@ -19,11 +19,11 @@ export const BtnMenu = styled.TouchableOpacity`
 export const Modes = styled.View`
     height: 50px;
     min-width: 100px;
-    background-color: #cccccc;
+    background-color: #FFF;
     flex-direction: row;
     border-radius: 20px;
     justify-content: center;
-    padding: 1px;
+    padding: 5px;
     align-items: center;
     gap: 10px;
 
