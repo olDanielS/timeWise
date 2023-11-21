@@ -8,10 +8,7 @@ import { TaskContext } from "../../Context/task";
 import { Alert } from "react-native";
 import { ModelTypeProps } from "../../Interfaces/ModelTypePros/ModalInterfaces";
 
-import Toast from 'react-native-toast-message';
-
-
-export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
+export default function ModalNewTask({close, show, feedback, data}: ModelTypeProps) {
 
     const {handleSubmitTask} = useContext(TaskContext)
 
@@ -23,6 +20,7 @@ export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
      async function handleNewTask(){
         if(!descriptionTask || !priorityLevel){
             Alert.alert('Ops', 'Os campos não podem ficar vazios')
+            console.log(data)
             return
             
         }
@@ -38,6 +36,7 @@ export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
         setPontuation(0);
         close()
     }
+    
     function handlePontuation(task:string){
         if(task == 'low'){
             setPriorityLevel('low')
@@ -67,7 +66,7 @@ export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
                 <BlurView intensity={10} style={styleModal.ModalArea}>
                     <ModalBody style={styleModal.shadow}>
                         <ModalHeader>
-                            <ModalTitle>Criar uma nova tarefa</ModalTitle>
+                            <ModalTitle>{data._id ? "Atualizando tarefa": "Criar uma nova tarefa"  }</ModalTitle>
                             <CloseButton onPress={() => close()}>
                                 <FontAwesome name="close" size={17} color='#7B7B7B' />
                             </CloseButton>

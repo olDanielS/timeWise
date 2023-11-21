@@ -9,6 +9,7 @@ interface ModalContextType{
     show: boolean;
     title: string;
     children?: ReactNode;
+    data?: any
 }
 
 export const ModalContext = createContext({} as ModalContextType)

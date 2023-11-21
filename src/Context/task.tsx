@@ -43,8 +43,29 @@ export default function TasKProvider({children}:TaskProviderProps){
             return err.response.data
         }
       };
-
     const handleUpdateTask = async (props) => {
+        try {
+          const raw = {
+            'description': props.descriptionTask,
+            'priorityLevel': props.priorityLevel,
+            'pontuation': props.pontuation
+          };
+    
+          const response = await api.post('task/create-task', raw, {
+            headers: {
+              "Content-Type": "application/json"        
+            },
+          });
+    
+          setNewTask(!newTask);
+          return response.data;
+
+        } catch(err){
+            return err.response.data
+        }
+      };
+
+    const handleUpdateStatusTask = async (props) => {
         try {
           const raw = {
             'status': !props.status
@@ -67,7 +88,7 @@ export default function TasKProvider({children}:TaskProviderProps){
       };
 
     return (
-        <TaskContext.Provider value={{handleSubmitTask, newTask,handleUpdateTask}}>
+        <TaskContext.Provider value={{handleSubmitTask, newTask,handleUpdateStatusTask}}>
             {children}
         </TaskContext.Provider>
     )

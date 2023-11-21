@@ -3,5 +3,6 @@ export type ModelTypeProps = {
     close: () => void,
     title?: string,
     children?: any,
-    feedback?: any
+    feedback?: any,
+    data?: any
 }
