@@ -11,8 +11,6 @@ import ModalNewTask from "../../Components/ModalNewTask";
 import ModalFeedback from "../../Components/ModalFeedBack";
 import ModalActions from "../../Components/ModalActions";
 
-import * as Progress from 'react-native-progress';
-
 import { TaskContext } from "../../Context/task";
 
 import api from "../../Services/api";
@@ -25,9 +23,13 @@ export default function Home() {
     useEffect(() => {
         async function handleGetAllTasks() {
 
-            const response = await api.get('task')
+            const dateDay = new Date();
+            console.log(dateDay)
 
-            setRemainingTasks(response.data)
+            const response = await api.get(`task/get-task-date/${dateDay}`)
+                   
+            console.log(response.data.tasksArray)
+            setRemainingTasks(response.data.tasksArray)
         }
 
         handleGetAllTasks();
@@ -47,7 +49,6 @@ export default function Home() {
     const pontuation = totalPoints.map((point:number) => SumTotalPoints+=point.pontuation) 
 
    let percentage = (totalPoints.length/remainingTasks.length/100) * 100
-    console.log(remainingTasks.length, percentage, totalPoints.length)
 
     function actionModal(type: string, item?: object) {
         if (type == 'task') {
@@ -113,7 +114,7 @@ export default function Home() {
                 <TitleBox>
                     <TitleContent>Tarefas restantes ({totalTask.length})</TitleContent>
                     <LineTitle />
-                    <Progress.Bar color='#40BF62' progress={percentage} width={200} />
+                    
                 </TitleBox>
                 <FlatList
                     data={remainingTasks}
