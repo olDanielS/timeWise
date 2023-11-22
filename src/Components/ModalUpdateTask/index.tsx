@@ -1,4 +1,4 @@
-import {useState, useContext } from "react";
+import {useState, useContext, useEffect } from "react";
 import { Modal, StyleSheet, TouchableWithoutFeedback, Keyboard} from "react-native";
 import { ModalBody, CloseButton, ModalHeader, ModalTitle, ModalContent, TitleContent,
      InputTask, LabelScore,BoxPrority,BoxTitle, BtnArea, Btn, BtnText, Submit, SubmitText} from './styles'
@@ -8,13 +8,22 @@ import { TaskContext } from "../../Context/task";
 import { Alert } from "react-native";
 import { ModelTypeProps } from "../../Interfaces/ModelTypePros/ModalInterfaces";
 
-export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
+export default function ModalUpdateTask({close, show, feedback,data}: ModelTypeProps) {
 
-    const {handleSubmitTask} = useContext(TaskContext)
+    const {handleUpdateTask} = useContext(TaskContext)
 
     const [descriptionTask, setDescriptionTask ] = useState('');
     const [priorityLevel, setPriorityLevel] = useState('');
     const [pontuation, setPontuation] = useState(0);
+
+    useEffect(() => {
+        const fetchData = async() => {
+                await setDescriptionTask(data.description)
+                await setPriorityLevel(data.priorityLevel)
+                console.log(descriptionTask)
+            }
+            fetchData()
+    }, [data])
 
     
      async function handleNewTask(){
@@ -24,7 +33,7 @@ export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
             return
             
         }
-    const response = await handleSubmitTask({descriptionTask, priorityLevel, pontuation})
+    const response = await handleUpdateTask({descriptionTask, priorityLevel, pontuation, _id:data._id})
     if(response.error){
         Alert.alert('Oops', 'Parece que algo deu errado :(\nVerifique se a tarefa já existe')
     }else{
@@ -56,18 +65,24 @@ export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
         }
     }
 
+    function closeModal(){
+        close();
+
+    }
+
+
     return (
         <Modal
             visible={show}
             transparent={true}
-            onRequestClose={() => close()}
+            onRequestClose={() => closeModal()}
             animationType="slide">
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <BlurView intensity={10} style={styleModal.ModalArea}>
                     <ModalBody style={styleModal.shadow}>
                         <ModalHeader>
-                            <ModalTitle>Criar uma nova tarefa</ModalTitle>
-                            <CloseButton onPress={() => close()}>
+                            <ModalTitle>Atualização de tarefa</ModalTitle>
+                            <CloseButton onPress={() => closeModal()}>
                                 <FontAwesome name="close" size={17} color='#7B7B7B' />
                             </CloseButton>
                         </ModalHeader>
@@ -97,7 +112,7 @@ export default function ModalNewTask({close, show, feedback}: ModelTypeProps) {
                         </BoxPrority>
 
                             <Submit onPress={() => handleNewTask()}>
-                                <SubmitText>Criar Tarefa</SubmitText>
+                                <SubmitText>Atualizar</SubmitText>
                             </Submit>
                     </ModalBody>
                 </BlurView>

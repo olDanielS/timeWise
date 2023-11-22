@@ -5,10 +5,6 @@ import { CloseButton, ModalHeader, ModalContent,
 import { ModalBody, Btn,ModalStatus,TitleContent,ModalTitle,Submit,SubmitText} from "./styles";
 import { BlurView } from "expo-blur";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import {useState, useContext } from "react";
-import { TaskContext } from "../../Context/task";
-import { Alert } from "react-native";
-
 
 export default function ModalFeedBack(props) {
     

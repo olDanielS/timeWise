@@ -10,6 +10,7 @@ import TaskItem from "../../Components/TaskItem";
 import ModalNewTask from "../../Components/ModalNewTask";
 import ModalFeedback from "../../Components/ModalFeedBack";
 import ModalActions from "../../Components/ModalActions";
+import ModalUpdateTask from "../../Components/ModalUpdateTask";
 
 import { TaskContext } from "../../Context/task";
 
@@ -34,6 +35,7 @@ export default function Home() {
 
 
     const [modalNewTaks, setModalNewTask] = useState(false);
+    const [modalUpdateTask, setModalUpdateTask] = useState(false);
     const [modalFeedBack, setModalFeedBack] = useState(false);
     const [modalActions, setModalActions] = useState(false);
 
@@ -51,6 +53,10 @@ export default function Home() {
         if (type == 'task') {
             setModalNewTask(!modalNewTaks)
         }
+        else if (type == 'update') {
+            setModalUpdateTask(!modalUpdateTask)
+            
+        } 
         else if (type == 'feedback') {
             setModalFeedBack(!modalFeedBack)
             setCurrentTask(item || {})
@@ -97,7 +103,7 @@ export default function Home() {
         ])
     }
 
-    function closeModal(data){
+    function closeModal(data:string){
         actionModal(data);
         setCurrentTask({})
     }
@@ -129,11 +135,13 @@ export default function Home() {
                 </Footer>
             </Content>
             <ModalNewTask show={modalNewTaks} close={() => actionModal('task')} feedback={actionModal} data={currentTask} />
+            
+            <ModalUpdateTask show={modalUpdateTask} close={() => actionModal('update')} feedback={actionModal} data={currentTask} />
 
             <ModalFeedback show={modalFeedBack} close={() => actionModal('feedback')} data={currentTask}/>
 
             <ModalActions show={modalActions} close={() => closeModal('action')} title={currentTask.description}>
-                <BtnActionsArea onPress={() => actionModal('task')}>
+                <BtnActionsArea onPress={() => actionModal('update')}>
                     <BtnActionsText>Editar</BtnActionsText>
                 </BtnActionsArea>
                 <BtnActionsArea onPress={() => removeTask(currentTask._id)}>
