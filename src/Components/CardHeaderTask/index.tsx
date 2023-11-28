@@ -19,7 +19,7 @@ export default function CardHeaderTask() {
     )
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     shadow: {
         shadowColor: "#000",
         shadowOffset: {

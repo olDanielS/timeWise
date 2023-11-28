@@ -112,7 +112,7 @@ export default function Home() {
     return (
         <Container>
 
-            <Header pontuation={SumTotalPoints}/>
+            <Header pontuation={SumTotalPoints} point={true}/>
             <CardHeaderTask />
 
             <Content>
