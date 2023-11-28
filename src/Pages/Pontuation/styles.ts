@@ -43,6 +43,7 @@ export const ContentTitleArea = styled.View`
     margin-top: 20px;
     align-items: center;
     gap: 5px;
+    margin-bottom: 10px;
 `
 
 export const TitleList = styled.Text`

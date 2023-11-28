@@ -39,7 +39,7 @@ export default function Home() {
     const [modalFeedBack, setModalFeedBack] = useState(false);
     const [modalActions, setModalActions] = useState(false);
 
-    const [currentTask, setCurrentTask] = useState({});
+    const [currentTask, setCurrentTask] = useState<any>({});
 
     const totalTask = remainingTasks.filter((item) => item.status !== true);
 
@@ -52,6 +52,10 @@ export default function Home() {
     function actionModal(type: string, item?: any) {
         if (type == 'task') {
             setModalNewTask(!modalNewTaks)
+            if(item){
+                setModalFeedBack(!modalFeedBack)
+                setCurrentTask(item || {})
+            }
         }
         else if (type == 'update') {
             setModalUpdateTask(!modalUpdateTask)
@@ -138,7 +142,7 @@ export default function Home() {
             
             <ModalUpdateTask show={modalUpdateTask} close={() => actionModal('update')} feedback={actionModal} data={currentTask} />
 
-            <ModalFeedback show={modalFeedBack} close={() => actionModal('feedback')} data={currentTask}/>
+            <ModalFeedback show={modalFeedBack} close={() => actionModal('feedback')} data={currentTask} modal={actionModal}/>
 
             <ModalActions show={modalActions} close={() => closeModal('action')} title={currentTask.description}>
                 <BtnActionsArea onPress={() => actionModal('update')}>

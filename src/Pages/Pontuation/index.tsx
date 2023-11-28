@@ -4,9 +4,10 @@ import { Container, CardsArea, Card, TextCardTitle, TextCardPontuation, TitleLis
 import Header from '../../Components/Header';
 import { stylesShadow } from '../../Components/TaskItem';
 import FilterTask from '../../Components/FilterTask';
+import CalendarModal from '../../Components/CalendarModal';
 
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { TouchableOpacity, FlatList, Text } from 'react-native';
+import { TouchableOpacity, FlatList, Text, Modal } from 'react-native';
 
 import api from '../../Services/api';
 
@@ -14,9 +15,12 @@ import { TaskContext } from '../../Context/task';
 
 export default function PontuationScreen() {
 
-    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString('en-GB'));
     const [totalScore, setTotalScore] = useState(0);
     const [dayScore, setDayScore] = useState([]);
+    
+    const [dateBalance, setDateBalance] = useState(new Date());
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const { newTask} = useContext(TaskContext);
 
@@ -24,10 +28,10 @@ export default function PontuationScreen() {
    
     useEffect(() => {
         async function handleGetAllTasks() {
-
-            const dateDay = new Date();
-            const response = await api.get(`task/get-task-date/${dateDay}`)
-                   
+            
+            let formatDate = new Date(dateBalance).toDateString()
+           console.log(formatDate)
+            const response = await api.get(`task/get-task-date/${dateBalance}`)
             setRemainingTasks(response.data.tasksArray)
         }
 
@@ -43,20 +47,23 @@ export default function PontuationScreen() {
             const response = await api.get(`task/get-task-date/${dateDay}`)     
 
             setDayScore(response.data.tasksArray)
-            console.log(response.data)
+           
         }
 
 
         handleDayScore();
         handleGetAllTasks();
         handleGetPontuation();
-    }, [newTask])
+    }, [newTask,dateBalance ])
 
     
     let SumTotalPoints = 0;
     const totalPoints = dayScore.filter((item:any) => item.status == true);
     const pontuation = totalPoints.map((point:number) => SumTotalPoints+=point.pontuation) 
 
+    function filterDayMoviments(dateSelected){
+        setDateBalance(dateSelected)
+       }
 
     return (
         <Container style={stylesShadow}>
@@ -75,8 +82,8 @@ export default function PontuationScreen() {
             </CardsArea>
 
             <ContentTitleArea>
-                <TitleList>Filtrar por data: {currentDate}</TitleList>
-                <TouchableOpacity>
+                <TitleList>Filtrar por data: {dateBalance.toLocaleString()}</TitleList>
+                <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
                     <FontAwesome name='calendar' size={24} color='#40BF62' />
                 </TouchableOpacity>
             </ContentTitleArea>
@@ -86,8 +93,14 @@ export default function PontuationScreen() {
                 keyExtractor={(item) => item._id.toString()}
                 renderItem={({ item }) => <FilterTask data={item} />}
                 showsVerticalScrollIndicator={false}
-                ListEmptyComponent={() => <Text>humm, ainda não à tarefas para carregar</Text>}
+                ListEmptyComponent={() => <Text>humm, não à tarefas para carregar</Text>}
             />
+             <Modal visible={modalVisible} animationType='fade' transparent>
+              <CalendarModal 
+              setVisible={() => setModalVisible(false)}
+              handleFilter={filterDayMoviments}
+              />
+          </Modal>
         </Container>
     )
 }

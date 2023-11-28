@@ -12,6 +12,7 @@ type TaskProviderProps = {
 interface TaskContextType {
     handleSubmitTask: (props: TaskProps) => void;
     handleUpdateTask: (props: TaskProps) => void;
+    handleUpdateStatusTask: (props: TaskProps) => void;
     newTask: boolean
     
 }
@@ -22,7 +23,7 @@ export default function TasKProvider({children}:TaskProviderProps){
 
     const [newTask, setNewTask] = useState<boolean>(false);
   
-    const handleSubmitTask = async (props) => {
+    const handleSubmitTask = async (props:any) => {
         try {
           const raw = {
             'description': props.descriptionTask,
@@ -69,7 +70,7 @@ export default function TasKProvider({children}:TaskProviderProps){
         }
       };
 
-    const handleUpdateStatusTask = async (props) => {
+    const handleUpdateStatusTask = async (props:any) => {
         try {
           const raw = {
             'status': !props.status

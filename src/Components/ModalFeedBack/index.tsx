@@ -6,7 +6,7 @@ import { ModalBody, Btn,ModalStatus,TitleContent,ModalTitle,Submit,SubmitText} f
 import { BlurView } from "expo-blur";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-export default function ModalFeedBack(props) {
+export default function ModalFeedBack(props:any) {
     
     return (
         <Modal
@@ -44,12 +44,10 @@ export default function ModalFeedBack(props) {
                             </BtnArea>
                         </BoxPrority>
 
-                            <Submit >
+                            <Submit onPress={() => props.modal('task', 'close')}>
                                 <SubmitText>Criar uma nova tarefa</SubmitText>
                             </Submit>
-                            <Submit >
-                                <SubmitText>Editar tarefa</SubmitText>
-                            </Submit>
+                            
                     </ModalBody>
                 </BlurView>
             </TouchableWithoutFeedback>

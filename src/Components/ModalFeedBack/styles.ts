@@ -43,11 +43,12 @@ export const TitleContent = styled.Text`
 export const Submit = styled.TouchableOpacity`
   background-color:#4285F4;
   margin: 0px auto;
-  margin-top: 5px;
+  margin-top: 15px;
   padding: 5px;
   border-radius: 5px;
   width: 70%;
   align-items: center;
+
 `
 export const SubmitText = styled.Text`
   font-size: 16px;
