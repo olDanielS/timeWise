@@ -31,7 +31,7 @@ export default function PontuationScreen() {
             
             let formatDate = new Date(dateBalance).toDateString()
            console.log(formatDate)
-            const response = await api.get(`task/get-task-date/${dateBalance}`)
+            const response = await api.get(`task/get-task-date/${formatDate}`)
             setRemainingTasks(response.data.tasksArray)
         }
 

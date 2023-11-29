@@ -82,7 +82,7 @@ export default function TasKProvider({children}:TaskProviderProps){
               "Content-Type": "application/json"        
             },
           });
-          console.log(response)
+         // console.log(response.data.updatedAt);
     
           setNewTask(!newTask);
           return response.data;

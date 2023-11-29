@@ -6,6 +6,8 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { Alert, FlatList, Text } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import TaskItem from "../../Components/TaskItem";
 import ModalNewTask from "../../Components/ModalNewTask";
 import ModalFeedback from "../../Components/ModalFeedBack";
@@ -18,7 +20,8 @@ import api from "../../Services/api";
 
 
 export default function Home() {
-    const [remainingTasks, setRemainingTasks] = useState<any>([])
+    const [remainingTasks, setRemainingTasks] = useState<any>([]);
+    const [lastTaskCompleted, setLastTaskCompleted] = useState<any>([]);
     const { newTask,handleUpdateStatusTask} = useContext(TaskContext);
 
     useEffect(() => {
@@ -94,11 +97,16 @@ export default function Home() {
     }
 
     function handleCompleteTask(data:any){
-        Alert.alert('Atenção', data.status ? 'Deseja desmarcar a tarefa ?' : 'Deseja marcar a tarefa como concluida?', [
+        Alert.alert('Atenção', 'Deseja marcar a tarefa como concluida?', [
             {
                 text: 'Sim',
                 onPress: async () => {
-                    handleUpdateStatusTask(data)
+                     if(data.status == false){
+                         const response = await handleUpdateStatusTask(data)
+                         AsyncStorage.setItem('@lastTask', JSON.stringify(response))
+                         return
+                        }
+                    Alert.alert('TimeWise', 'Oops... Parece que essa tarefa já foi marcada como concluida')
                 }
             },
             {
@@ -117,7 +125,7 @@ export default function Home() {
         <Container>
 
             <Header pontuation={SumTotalPoints} point={true}/>
-            <CardHeaderTask />
+            <CardHeaderTask data={lastTaskCompleted} />
 
             <Content>
                 <TitleBox>
