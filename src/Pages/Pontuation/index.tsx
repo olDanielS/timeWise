@@ -11,6 +11,8 @@ import { TouchableOpacity, FlatList, Text, Modal } from 'react-native';
 
 import api from '../../Services/api';
 
+import format from 'date-fns/format';
+
 import { TaskContext } from '../../Context/task';
 
 export default function PontuationScreen() {
@@ -28,10 +30,8 @@ export default function PontuationScreen() {
    
     useEffect(() => {
         async function handleGetAllTasks() {
-            
-            let formatDate = new Date(dateBalance).toDateString()
-           console.log(formatDate)
-            const response = await api.get(`task/get-task-date/${formatDate}`)
+           
+            const response = await api.get(`task/get-task-date/${dateBalance}`)
             setRemainingTasks(response.data.tasksArray)
         }
 
@@ -82,7 +82,7 @@ export default function PontuationScreen() {
             </CardsArea>
 
             <ContentTitleArea>
-                <TitleList>Filtrar por data: {dateBalance.toLocaleString()}</TitleList>
+                <TitleList>Filtrar por data: {format(new Date(dateBalance),'dd/MM//yyyy')}</TitleList>
                 <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
                     <FontAwesome name='calendar' size={24} color='#40BF62' />
                 </TouchableOpacity>

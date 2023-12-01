@@ -7,38 +7,46 @@ import { useState, useEffect,useContext } from 'react';
 
 import { TaskContext } from "../../Context/task";
 
+import { useIsFocused } from '@react-navigation/native'; 
+
+import {format } from 'date-fns'
+
 
 export default function CardHeaderTask(props) {
 
     const { newTask} = useContext(TaskContext);
 
-    const [lasTask, setLastTask] = useState([]);
+    const [lastTask, setLastTask] = useState();
     const [houtLasTask, setHoutLasTask] = useState();
+
+    const isFocused = useIsFocused();
 
     useEffect(() => {
         const getTask = async () => {
-            let resp = await AsyncStorage.getItem('@lastTask');
+            const resp = await AsyncStorage.getItem('@lastTask');
             setLastTask(JSON.parse(resp)) 
 
-            let time = new Date(lasTask.updatedAt);
-            const hora = time.toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' });
-            console.log(hora)    
-            setHoutLasTask(hora);
+            let time = format(new Date(lastTask.updatedAt), 'dd/MM/yyyy')
+            setHoutLasTask(time);
+            console.log(time)    
+            //let time = new Date(lasTask.updatedAt);
+            //const hora = time.toLocaleTimeString('en-US', {   hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' });
+            
             
         }
         getTask();
-    },[newTask])
+    },[newTask,isFocused])
     return (
         <Container style={styles.shadow}>
             <LeftCard>
                 <CheckPoint style={styles.shadow}>
                     <FontAwesome name='check' size={20} color='#FFF'/>
                 </CheckPoint>
-            <TextLeftCard>{lasTask ? lasTask.description: "Conclua uma tarefa para ela aparecer aqui"}</TextLeftCard>
+            <TextLeftCard>{lastTask ? lastTask.description: "Conclua uma tarefa para ela aparecer aqui"}</TextLeftCard>
             </LeftCard>
             <RigthCard style={styles.shadow}>
             <FontAwesome name='clock-o' size={32} color='#FFF'/>
-            <TextRigthCard>{lasTask ? houtLasTask: ""}</TextRigthCard>
+            <TextRigthCard>{lastTask ? houtLasTask: ""}</TextRigthCard>
             </RigthCard>
         </Container>
     )
