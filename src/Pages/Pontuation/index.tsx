@@ -14,19 +14,22 @@ import api from '../../Services/api';
 import format from 'date-fns/format';
 
 import { TaskContext } from '../../Context/task';
+import { useIsFocused } from '@react-navigation/native'; 
+
+import { TaskProps } from '../../Interfaces/TasksInterface/TaskInterface';
 
 export default function PontuationScreen() {
 
-    const [totalScore, setTotalScore] = useState(0);
+    const [totalScore, setTotalScore] = useState<any>(0);
     const [dayScore, setDayScore] = useState([]);
     
     const [dateBalance, setDateBalance] = useState(new Date());
-
     const [modalVisible, setModalVisible] = useState(false);
 
     const { newTask} = useContext(TaskContext);
-
     const [remainingTasks, setRemainingTasks] = useState<any>([])
+
+    const isFocused = useIsFocused();
    
     useEffect(() => {
         async function handleGetAllTasks() {
@@ -54,14 +57,14 @@ export default function PontuationScreen() {
         handleDayScore();
         handleGetAllTasks();
         handleGetPontuation();
-    }, [newTask,dateBalance ])
+    }, [newTask,dateBalance, isFocused])
 
     
     let SumTotalPoints = 0;
     const totalPoints = dayScore.filter((item:any) => item.status == true);
-    const pontuation = totalPoints.map((point:number) => SumTotalPoints+=point.pontuation) 
+    const pontuation = totalPoints.map((point:TaskProps) => SumTotalPoints+=point.pontuation) 
 
-    function filterDayMoviments(dateSelected){
+    function filterDayMoviments(dateSelected:Date){
         setDateBalance(dateSelected)
        }
 

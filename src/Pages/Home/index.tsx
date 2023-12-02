@@ -14,6 +14,7 @@ import ModalFeedback from "../../Components/ModalFeedBack";
 import ModalActions from "../../Components/ModalActions";
 import ModalUpdateTask from "../../Components/ModalUpdateTask";
 
+import { TaskProps } from "../../Interfaces/TasksInterface/TaskInterface";
 import { TaskContext } from "../../Context/task";
 
 import api from "../../Services/api";
@@ -22,19 +23,34 @@ import api from "../../Services/api";
 export default function Home() {
     const [remainingTasks, setRemainingTasks] = useState<any>([]);
     const [lastTaskCompleted, setLastTaskCompleted] = useState<any>([]);
-    const { newTask,handleUpdateStatusTask} = useContext(TaskContext);
+    const { newTask, handleUpdateStatusTask } = useContext(TaskContext);
+
+
+    const sortByPontuation = () => {
+        const sortedTasks = [...remainingTasks];
+        sortedTasks.sort((a, b) => b.pontuation - a.pontuation);
+        setRemainingTasks(sortedTasks);
+      };
+
 
     useEffect(() => {
         async function handleGetAllTasks() {
-
-            const dateDay = new Date();
-            const response = await api.get(`task/get-task-date/${dateDay}`)
-                   
-            setRemainingTasks(response.data.tasksArray)
+            try {
+                const dateDay = new Date();
+                const response = await api.get(`task/get-task-date/${dateDay}`);
+                const tasksArray = response.data.tasksArray;
+        
+                // Atualizar os dados
+                setRemainingTasks(tasksArray);
+        
+                
+              } catch (error) {
+                console.error('Erro ao obter dados:', error);
+              }
         }
 
         handleGetAllTasks();
-    }, [newTask])
+    }, [newTask]);
 
 
     const [modalNewTaks, setModalNewTask] = useState(false);
@@ -44,30 +60,31 @@ export default function Home() {
 
     const [currentTask, setCurrentTask] = useState<any>({});
 
-    const totalTask = remainingTasks.filter((item) => item.status !== true);
+    const totalTask = remainingTasks.filter((item:any) => item.status !== true);
 
     let SumTotalPoints = 0;
-    const totalPoints = remainingTasks.filter((item:any) => item.status == true);
-    const pontuation = totalPoints.map((point:number) => SumTotalPoints+=point.pontuation) 
+    const totalPoints = remainingTasks.filter((item: any) => item.status == true);
+    const pontuation = totalPoints.map((point: TaskProps) => SumTotalPoints += point.pontuation)
 
-   //let percentage = (totalPoints.length/remainingTasks.length/100) * 100  -- Implementar barra de progresso 
+    //let percentage = (totalPoints.length/remainingTasks.length/100) * 100  -- Implementar barra de progresso 
 
     function actionModal(type: string, item?: any) {
         if (type == 'task') {
             setModalNewTask(!modalNewTaks)
-            if(item){
+            if (item) {
                 setModalFeedBack(!modalFeedBack)
                 setCurrentTask(item || {})
             }
         }
         else if (type == 'update') {
             setModalUpdateTask(!modalUpdateTask)
-            
-        } 
+
+        }
         else if (type == 'feedback') {
             setModalFeedBack(!modalFeedBack)
             setCurrentTask(item || {})
-            
+
+
         } else {
             setModalActions(!modalActions)
             setCurrentTask(item || {})
@@ -82,7 +99,7 @@ export default function Home() {
                 onPress: async () => {
                     console.log('Removendo tarefa ID: ', id);
                     await api.delete(`task/${id}`).then(() => {
-                        setRemainingTasks((prevTasks) => prevTasks.filter(item => item._id !== id));
+                        setRemainingTasks((prevTasks:any) => prevTasks.filter(item => item._id !== id));
                         setModalActions(!modalActions)
                     }).catch(() => {
                         alert('Erro ao remover a tarefa')
@@ -96,16 +113,16 @@ export default function Home() {
         ])
     }
 
-    function handleCompleteTask(data:any){
+    function handleCompleteTask(data: any) {
         Alert.alert('Atenção', 'Deseja marcar a tarefa como concluida?', [
             {
                 text: 'Sim',
                 onPress: async () => {
-                     if(data.status == false){
-                         const response = await handleUpdateStatusTask(data)
-                         AsyncStorage.setItem('@lastTask', JSON.stringify(response))
-                         return
-                        }
+                    if (data.status == false) {
+                        const response = await handleUpdateStatusTask(data)
+                        AsyncStorage.setItem('@lastTask', JSON.stringify(response))
+                        return
+                    }
                     Alert.alert('TimeWise', 'Oops... Parece que essa tarefa já foi marcada como concluida')
                 }
             },
@@ -115,7 +132,7 @@ export default function Home() {
         ])
     }
 
-    function closeModal(data:string){
+    function closeModal(data: string) {
         actionModal(data);
         setCurrentTask({})
     }
@@ -124,14 +141,14 @@ export default function Home() {
     return (
         <Container>
 
-            <Header pontuation={SumTotalPoints} point={true}/>
+            <Header pontuation={SumTotalPoints} point={true} />
             <CardHeaderTask data={lastTaskCompleted} />
 
             <Content>
                 <TitleBox>
                     <TitleContent>Tarefas restantes ({totalTask.length})</TitleContent>
                     <LineTitle />
-                    
+
                 </TitleBox>
                 <FlatList
                     data={remainingTasks}
@@ -139,6 +156,7 @@ export default function Home() {
                     renderItem={({ item }) => <TaskItem data={item} openModal={actionModal} checkTask={handleCompleteTask} />}
                     showsVerticalScrollIndicator={false}
                     ListEmptyComponent={() => <Text>humm, ainda não à tarefas para carregar</Text>}
+
                 />
                 <Footer>
                     <BtnNewTask onPress={() => actionModal("task")}>
@@ -147,10 +165,10 @@ export default function Home() {
                 </Footer>
             </Content>
             <ModalNewTask show={modalNewTaks} close={() => actionModal('task')} feedback={actionModal} data={currentTask} />
-            
+
             <ModalUpdateTask show={modalUpdateTask} close={() => actionModal('update')} feedback={actionModal} data={currentTask} />
 
-            <ModalFeedback show={modalFeedBack} close={() => actionModal('feedback')} data={currentTask} modal={actionModal}/>
+            <ModalFeedback show={modalFeedBack} close={() => actionModal('feedback')} data={currentTask} modal={actionModal} />
 
             <ModalActions show={modalActions} close={() => closeModal('action')} title={currentTask.description}>
                 <BtnActionsArea onPress={() => actionModal('update')}>
@@ -161,7 +179,7 @@ export default function Home() {
                 </BtnActionsArea>
 
             </ModalActions>
-            
+
         </Container>
     )
 }

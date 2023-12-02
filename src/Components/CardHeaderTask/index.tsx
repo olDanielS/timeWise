@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useEffect,useContext } from 'react';
 
 import { TaskContext } from "../../Context/task";
+import { TaskProps } from '../../Interfaces/TasksInterface/TaskInterface';
 
 import { useIsFocused } from '@react-navigation/native'; 
 
@@ -15,24 +16,15 @@ import {format } from 'date-fns'
 export default function CardHeaderTask(props) {
 
     const { newTask} = useContext(TaskContext);
-
-    const [lastTask, setLastTask] = useState();
-    const [houtLasTask, setHoutLasTask] = useState();
+    const [lastTask, setLastTask] = useState<TaskProps>();
+    
 
     const isFocused = useIsFocused();
 
     useEffect(() => {
         const getTask = async () => {
             const resp = await AsyncStorage.getItem('@lastTask');
-            setLastTask(JSON.parse(resp)) 
-
-            let time = format(new Date(lastTask.updatedAt), 'dd/MM/yyyy')
-            setHoutLasTask(time);
-            console.log(time)    
-            //let time = new Date(lasTask.updatedAt);
-            //const hora = time.toLocaleTimeString('en-US', {   hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' });
-            
-            
+            setLastTask(JSON.parse(resp))         
         }
         getTask();
     },[newTask,isFocused])
@@ -46,7 +38,7 @@ export default function CardHeaderTask(props) {
             </LeftCard>
             <RigthCard style={styles.shadow}>
             <FontAwesome name='clock-o' size={32} color='#FFF'/>
-            <TextRigthCard>{lastTask ? houtLasTask: ""}</TextRigthCard>
+            <TextRigthCard>{lastTask ? format(new Date(lastTask.updatedAt),'dd/MM/yyyy') : ""}</TextRigthCard>
             </RigthCard>
         </Container>
     )
