@@ -37,7 +37,9 @@ export default function Home() {
         async function handleGetAllTasks() {
             try {
                 const dateDay = new Date();
-                const response = await api.get(`task/get-task-date/${dateDay}`);
+                const response = await api.get(`task/get-task-date/${dateDay}`,{
+                    timeout: 10000
+                });
                 const tasksArray = response.data.tasksArray;
         
                 // Atualizar os dados
@@ -45,8 +47,12 @@ export default function Home() {
         
                 
               } catch (error) {
-                console.error('Erro ao obter dados:', error);
-              }
+                if (error.code === 'ECONNABORTED') {
+                    Alert.alert('TimeWise', "Ops, parece que o servidor demorou a responder.\nTente novamente mais tarde!");
+                  } else {
+                    console.log(error.message);
+                  }
+                }
         }
 
         handleGetAllTasks();
